@@ -3,10 +3,12 @@
     "version": "0.0.0",
     "main": "dist/index.js",
     "private": true,
-    "type": "module",
+    "type": "commonjs",
     "scripts": {
         "dev": "nodemon --exclude node_modules --exclude dist --watch src --exec \"npm run build && node dist/index.js \"",
-        "build": "tsc"
+        "build": "tsc",
+        "lint": "echo 'lint not set'",
+        "test": "jest"
     },
     "dependencies": {
         "@mashkar803/express-utils": "^1.0.0",
@@ -22,8 +24,12 @@
     "devDependencies": {
         "@types/cors": "^2.8.17",
         "@types/express": "^4.17.21",
+        "@types/jest": "^29.5.14",
         "@types/node": "^22.13.9",
+        "jest": "^29.7.0",
         "nodemon": "^3.1.9",
+        "ts-jest": "^29.2.6",
+        "ts-node": "^10.9.2",
         "typescript": "^5.8.2"
     }
 }

@@ -3,9 +3,10 @@ import dotenv from "dotenv"
 
 dotenv.configDotenv();
 
-const envConfig = {
+export const envConfig = {
     PORT: process.env.PORT || 3000,
-    TOKEN_SECRET: process.env.TOKEN_SECRET!
+    TOKEN_SECRET: process.env.TOKEN_SECRET!,
+    NODE_ENV: process.env.NODE_ENV || "development"
 }
 
     ;
