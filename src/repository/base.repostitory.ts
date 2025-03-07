@@ -1,4 +1,4 @@
-import { IBaseRepository } from "../models/baseRepository.interface.js";
+import { IBaseRepository } from "../interface/baseRepository.interface.js";
 
 // change to whichever database you are using
 export class BaseRepository<T> implements IBaseRepository<T> {
