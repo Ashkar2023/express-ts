@@ -6,10 +6,7 @@ import { appLogger } from "./utils/logger/index.js";
 import { userAuthRouter } from "./modules/user/routers/user-auth.routes.js";
 import { authenticateUser } from "./middlewares/auth.middleware.js";
 import { globalErrorHandler } from "extils";
-import { categoryRouter } from "./modules/category/category.routes.js";
-import cookieParser from "cookie-parser"
-import { expenseRoutes } from "./modules/expense/expense.routes.js";
-import { budgetRouter } from "./modules/budget/budget.routes.js";
+import cookieParser from "cookie-parser";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -41,10 +38,6 @@ app.use(express.static(path.join(__dirname, "../public/")))
 
 app.use("/v1/users/auth", userAuthRouter);
 app.use(authenticateUser);
-
-app.use("/v1/categories", categoryRouter);
-app.use("/v1/expenses", expenseRoutes);
-app.use("/v1/budgets", budgetRouter);
 
 
 app.listen(envConfig.PORT, () => {
