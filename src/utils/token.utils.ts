@@ -1,4 +1,5 @@
-import { SignJWT, jwtVerify, decodeJwt, JWTPayload, JWTVerifyResult } from "jose"
+import { BadRequestError } from "extils";
+import { SignJWT, jwtVerify, decodeJwt, JWTVerifyResult } from "jose"
 
 export type TokenType = "ACCESS" | "REFRESH" | "PWD_RESET";
 
@@ -17,17 +18,17 @@ export async function signJWT({ payload, secret, tokenType }: {
 })
     : Promise<string> {
 
-    let currentSpan: string;
+    let customSpan: string;
 
     switch (tokenType) {
         case "REFRESH":
-            currentSpan = REFRESH_TOKEN_SPAN;
+            customSpan = REFRESH_TOKEN_SPAN;
             break;
         case "ACCESS":
-            currentSpan = ACCESS_TOKEN_SPAN;
+            customSpan = ACCESS_TOKEN_SPAN;
             break;
         case "PWD_RESET":
-            currentSpan = PWD_RESET_TOKEN_SPAN;
+            customSpan = PWD_RESET_TOKEN_SPAN;
             break;
         default:
             throw new Error("Invalid Token Type")
@@ -36,7 +37,7 @@ export async function signJWT({ payload, secret, tokenType }: {
     const jwt = await new SignJWT(payload)
         .setProtectedHeader({ alg: "HS256", typ: "JWT" })
         .setIssuedAt()
-        .setExpirationTime(currentSpan)
+        .setExpirationTime(customSpan)
         .sign(encodeSecret(secret))
 
     return jwt;
@@ -53,11 +54,12 @@ export async function verifyJWT({ jwt, secret }: {
             jwt,
             encodedSecret,
         );
+
         return JwtPayload;
 
     } catch (error) {
         if (error instanceof Error) console.log("error from @common/token handler :\n", error.message);
-        throw error
+        throw new BadRequestError("refresh token invalid", 401);
     }
 
 }
